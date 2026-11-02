@@ -1,13 +1,11 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
 
 import Izuzeci.PremladStudentException;
 import Izuzeci.StudentBuducnostException;
 import Klase.Odsjek;
 import Klase.Student;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -37,7 +35,16 @@ public class Main {
                 System.out.println("Molimo ponovite unos datuma rođenja!");
             }
         }
+        System.out.print("Unesite ocjene studenta(x,y,...)");
+        String ocjeneString = scanner.nextLine();
+        String[] ocjeneDijelovi = ocjeneString.split(",");
 
+        List<Integer>ocjene=new ArrayList<>();
+        for(String jednaOcjena : ocjeneDijelovi) {
+            ocjene.add(Integer.valueOf(jednaOcjena));
+        }
+
+        student.setOcjene(ocjene);
         System.out.println("Unos studenta uspješan! " + String.valueOf(student));
     }
 }
