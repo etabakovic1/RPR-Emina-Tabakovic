@@ -1,13 +1,43 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+import Izuzeci.PremladStudentException;
+import Izuzeci.StudentBuducnostException;
+import Klase.Odsjek;
+import Klase.Student;
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class Main {
+    public Main() {
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean uspjesanUnos = false;
+        Student student = null;
+
+        while(!uspjesanUnos) {
+            try {
+                System.out.printf("Datum rođenja (dd/mm/yyyy):");
+                String datumString = scanner.nextLine();
+                int godina = Integer.valueOf(datumString.substring(6));
+                int mjesec = Integer.valueOf(datumString.substring(3, 5));
+                int dan = Integer.valueOf(datumString.substring(0, 2));
+                LocalDate datumDate = LocalDate.of(godina, mjesec, dan);
+                student = new Student("Ime", "Prezime", datumDate, "12345", Odsjek.RI, 2);
+                uspjesanUnos = true;
+            } catch (PremladStudentException e) {
+                System.out.println(e.getMessage());
+                return;
+            } catch (StudentBuducnostException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Molimo ponovite unos datuma rođenja!");
+            }
+        }
+
+        System.out.println("Unos studenta uspješan! " + String.valueOf(student));
     }
 }
