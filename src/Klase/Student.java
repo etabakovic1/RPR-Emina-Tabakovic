@@ -1,3 +1,9 @@
+package Klase;
+
+import Izuzeci.PremladStudentException;
+import Izuzeci.StudentBuducnostException;
+import Izuzeci.DijeljenjeSNulomException;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
@@ -9,7 +15,7 @@ public class Student {
     private Integer godinaStudija;
     private List<Integer> ocjene;
 
-    public Student(String ime, String prezime, LocalDate datumRodjenja, String brojIndeksa, Odsjek odsjek, Integer godinaStudija) throws Exception
+    public Student(String ime, String prezime, LocalDate datumRodjenja, String brojIndeksa, Odsjek odsjek, Integer godinaStudija) throws PremladStudentException, StudentBuducnostException
     {
         setIme(ime);
         setPrezime(prezime);
@@ -19,15 +25,21 @@ public class Student {
         setGodinaStudija(godinaStudija);
         setOcjene(new ArrayList<Integer>());
     }
-    public Double Prosjek() {
+    public Double Prosjek() throws DijeljenjeSNulomException {
         Double prosjek = 0.0;
         for (Integer ocjena : ocjene)
             prosjek += ocjena;
+        if(ocjene.size()==0) throw new DijeljenjeSNulomException("Nije moguće dijeljenje s nulom!");
         return prosjek / ocjene.size();
     }
     public String toString() {
-        return "Student: " + ime + " " + prezime + ", broj indeksa: " +
-                brojIndeksa + ", prosjek: " + Prosjek();
+        try {
+            return "Klase.Student: " + ime + " " + prezime + ", broj indeksa: " +
+                    brojIndeksa + ", prosjek: " + Prosjek();
+        } catch(DijeljenjeSNulomException e) {
+            System.out.println("Student nema nijednu unesenu ocjenu! Nije moguće ispisati podatke.");
+            return "";
+        }
     }
 
     public String getPrezime() {
@@ -72,7 +84,7 @@ public class Student {
              if (datumRodjenja.isEqual(today) || datumRodjenja.isAfter(today))
                  throw new StudentBuducnostException("Datum rođenja ne može biti u budućnosti!");
             else if (today.getYear() - datumRodjenja.getYear() < 16)
-            throw new PremladStudentException("Student ne može biti mlađi od 16 godina!");
+            throw new PremladStudentException("Klase.Student ne može biti mlađi od 16 godina!");
         this.datumRodjenja = datumRodjenja;
     }
 
